@@ -32,6 +32,16 @@
 > npm start/node index.js
 ```
 
+## FOR DEPLOY HEROKU USER
+
+<p><a href="https://heroku.com/deploy?template="https://github.com/KurrXd/KurzBotAssistan"> <img src="https://www.herokucdn.com/deploy/button.svg" alt="Deploy to Heroku" /></a></p>
+
+## FOR DEPLOY RAILWAY USER
+
+[![Deploy on Railway](https://railway.app/button.svg)](https://railway.app/new/template?template=https%3A%2F%2Fgithub.com%2FKurrXd%2FKurzBotAssistan)
+
+
+
 # INSTALL
 * [Node.js](https://nodejs.org/en/)
 * [Git](https://git-scm.com/downloads)
