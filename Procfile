@@ -1,1 +1,1 @@
-worker: npm install && npm install node-fetch && node .
+worker: npm install && node .
