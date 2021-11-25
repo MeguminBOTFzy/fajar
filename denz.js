@@ -63,6 +63,8 @@ const { herolist } = require('./lib/herolist.js')
 const { herodetails } = require('./lib/herodetail.js')
 const { mediafireDl } = require('./lib/mediafire.js')
 const { pinterest } = require('./lib/pinterest')
+const atm = require("./lib/atm");
+const game = require("./lib/game");
 const { virtex } = require('./virtex/virtex')
 const { virtex2 } = require('./virtex/virtex2')
 const { virtex3 } = require('./virtex/virtex3')
@@ -77,6 +79,7 @@ const { virtag } = require('./virtex/virtag')
 const { emoji2 } = require('./virtex/emoji2')
 const { hole, api, beku, korak, petasan, es, mata, black, naga } = require('./virtex/hole')
 const { addVote, delVote } = require("./lib/vote")
+const { isGame, gameAdd, givegame, cekGLimit } = require("./lib/limit");
 const reminder = require("./lib/reminder")
 const { virtexx, vipi } = require('./lib/virtex.js')
 const { addCommands, checkCommands, deleteCommands } = require('./lib/autoresp')
@@ -118,6 +121,22 @@ const bucinrandom = JSON.parse(fs.readFileSync('./database/bucin.json'))
 const randomdilan = JSON.parse(fs.readFileSync('./database/dilan.json'))
 const hekerbucin = JSON.parse(fs.readFileSync('./database/hekerbucin.json'))
 const katailham = JSON.parse(fs.readFileSync('./database/katailham.json'))
+let glimit = JSON.parse(fs.readFileSync('./database/user/glimit.json'));
+let tebakanime = JSON.parse(fs.readFileSync('./database/tebakanime.json'))
+let tebakgambar = JSON.parse(fs.readFileSync('./database/tebakgambar.json'))
+let asahotak = JSON.parse(fs.readFileSync('./database/asahotak.json'))
+let caklontong = JSON.parse(fs.readFileSync('./database/caklontong.json'))
+let tebaksiapaaku = JSON.parse(fs.readFileSync('./database/tebaksiapaaku.json'))
+let tebakbendera = JSON.parse(fs.readFileSync('./database/tebakbendera.json'))
+let susunkata = JSON.parse(fs.readFileSync('./database/susunkata.json'))
+let tebakata = JSON.parse(fs.readFileSync('./database/tebakata.json'))
+let tebaklirik = JSON.parse(fs.readFileSync('./database/tebaklirik.json'))
+let tebakjenaka = JSON.parse(fs.readFileSync('./database/tebakjenaka.json'))
+let tebakimia = JSON.parse(fs.readFileSync('./database/tebakimia.json'))
+let kuismath = JSON.parse(fs.readFileSync('./database/kuismath.json'))
+let tebaklagu = JSON.parse(fs.readFileSync('./database/tebaklagu.json'))
+let tebaktebakan = JSON.parse(fs.readFileSync('./database/tebaktebakan.json'))
+let family100 = [];
 
 ky_ttt = []
 tttawal= ["0️⃣","1️⃣","2️⃣","3️⃣","4️⃣","5️⃣","6️⃣","7️⃣","8️⃣","9️⃣"]
@@ -734,31 +753,179 @@ denz.sendMessage(id, buttonMessages, MessageType.buttonsMessage, options)
 				}
 			}
 		}
-		thumbnail = fs.readFileSync("./v/virgam.jpeg") 
-        thumbnail2 = fs.readFileSync("./v/virus.jpeg") 
-        thumbnail3 = fs.readFileSync("./v/v.jpeg") 
-        
-		const sendFakeImg = function(from, imageasli, caption, thumbnail, denz){
-	                let ai = {
-		thumbnail: thumbnail ? thumbnail : fs.readFileSync(`./v/virgam.jpeg`),
-		quoted: mek ? mek : ''
-	}
-	denz.sendMessage(from, imageasli, MessageType.image, ai)
-     }
-    const sendFakeImg2 = function(from, imageasli, caption, thumbnail2, denz){
-	                let ai = {
-		thumbnail: thumbnail2 ? thumbnail2 : fs.readFileSync(`./v/virus.jpeg`),
-		quoted: mek ? mek : ''
-	}
-	denz.sendMessage(from, imageasli, MessageType.image, ai)
-     }
-    const sendFakeImg3 = function(from, imageasli, caption, thumbnail3, denz){
-	                let ai = {
-		thumbnail: thumbnail3 ? thumbnail3 : fs.readFileSync(`./v/v.jpeg`),
-		quoted: mek ? mek : ''
-	}
-	denz.sendMessage(from, imageasli, MessageType.image, ai)
-     }
+		// GAME 
+             game.cekWaktuFam(denz, family100)
+          
+            if (tebakgambar.hasOwnProperty(sender.split('@')[0]) && !isCmd) {
+                kuis = true
+                jawaban = tebakgambar[sender.split('@')[0]]
+                if (budy.toLowerCase() == jawaban) {
+                	var http = randomNomor(100)
+                    atm.addKoinUser(sender, http, _uang)
+                    await reply(`*_🎮 Tebak Gambar  🎮_*\n\n** *Jawaban Benar🎉 *\nIngin bermain lagi? kirim *${prefix}tebakgambar*`)
+                    delete tebakgambar[sender.split('@')[0]]
+                    fs.writeFileSync("./database/tebakgambar.json", JSON.stringify(tebakgambar))
+                }
+            }
+        if (game.isfam(from, family100)) {
+            var anjuy = game.getjawaban100(from, family100)
+            for (let i of anjuy){
+                if (budy.toLowerCase().includes(i)){
+                    var htgmp = Math.floor(Math.random() * 20) + 1
+                    atm.addKoinUser(sender, htgmp, _uang)
+                    await reply(`*Jawaban benar*\n*Jawaban :* ${i}\n*Hadiah :* $${htgmp}\n*Jawaban yang blum tertebak :* ${anjuy.length - 1}`)
+                    var anug = anjuy.indexOf(i)
+                    anjuy.splice(anug, 1)
+                }
+            }
+            if (anjuy.length < 1){
+                denz.sendMessage(from, `Semua jawaban sudah tertebak\nKirim *${prefix}family100* untuk bermain lagi`, text)
+                family100.splice(game.getfamposi(from, family100), 1)
+            }
+       }
+            if (tebakanime.hasOwnProperty(sender.split('@')[0]) && !isCmd) {
+                kuis = true
+                jawaban = tebakanime[sender.split('@')[0]]
+                if (budy.toLowerCase() == jawaban) {
+                	var htgmu = randomNomor(100)
+                    atm.addKoinUser(sender, htgmu, _uang)
+                    await reply(`*_🎮 Tebak Anime 🎮_*\n\n** *Jawaban Benar🎉*\n** *Mendapatkan* : _Rp ${htgmu} 💰_\n\nIngin bermain lagi? kirim *${prefix}tebakanime*`)
+                    delete tebakanime[sender.split('@')[0]]
+                    fs.writeFileSync("./database/tebakanime.json", JSON.stringify(tebakanime))
+                }
+            }
+            if (tebaklagu.hasOwnProperty(sender.split('@')[0]) && !isCmd) {
+                kuis = true
+                jawaban = tebaklagu[sender.split('@')[0]]
+                if (budy.toLowerCase() == jawaban) {
+                	var htpl = randomNomor(100)
+                    atm.addKoinUser(sender, htpl, _uang)
+                    await reply(`*_🎮 Tebak Lagu 🎮_*\n\n** *Jawaban Benar🎉*\n** *Mendapatkan* : _Rp ${htpl} 💰_\n\nIngin bermain lagi? kirim *${prefix}tebaklagu*`)
+                    delete tebaklagu[sender.split('@')[0]]
+                    fs.writeFileSync("./database/tebaklagu.json", JSON.stringify(tebaklagu))
+                }
+            }
+            if (tebaktebakan.hasOwnProperty(sender.split('@')[0]) && !isCmd) {
+                kuis = true
+                jawaban = tebaktebakan[sender.split('@')[0]]
+                if (budy.toLowerCase() == jawaban) {
+                	var htpu = randomNomor(100)
+                    atm.addKoinUser(sender, htpu, _uang)
+                    await reply(`*_🎮 Tebak Tebakan 🎮_*\n\n** *Jawaban Benar🎉*\n** *Mendapatkan* : _Rp ${htpu} 💰_\n\nIngin bermain lagi? kirim *${prefix}tebaktebakan*`)
+                    delete tebaktebakan[sender.split('@')[0]]
+                    fs.writeFileSync("./database/tebaktebakan.json", JSON.stringify(tebaktebakan))                    
+                }
+            }
+            if (kuismath.hasOwnProperty(sender.split('@')[0]) && !isCmd) {
+                kuis = true
+                jawaban = kuismath[sender.split('@')[0]]
+                if (budy.toLowerCase() == jawaban) {
+                	var htcc = randomNomor(100)
+                    atm.addKoinUser(sender, htcc, _uang)
+                    await reply(`*_🎮 Kuis Matematika  🎮_*\n\n** *Jawaban Benar🎉*\n** *Mendapatkan* : _Rp ${htcc} 💰_\n\nIngin bermain lagi? kirim *${prefix}kuismath*`)
+                    delete kuismath[sender.split('@')[0]]
+                    fs.writeFileSync("./database/kuismath.json", JSON.stringify(kuismath))
+                }
+            }
+          if (asahotak.hasOwnProperty(sender.split('@')[0]) && !isCmd) {
+                kuis = true
+                jawaban = asahotak[sender.split('@')[0]]
+                if (budy.toLowerCase() == jawaban) {
+                	var htgm = randomNomor(100)
+                    atm.addKoinUser(sender, htgm, _uang)
+                    await reply(`*_🎮 Asah Otak  🎮_*\n\n** *Jawaban Benar🎉*\n** *Mendapatkan* : _Rp ${htgm} 💰_\n\nIngin bermain lagi? kirim *${prefix}asahotak*`)
+                    delete asahotak[sender.split('@')[0]]
+                    fs.writeFileSync("./database/asahotak.json", JSON.stringify(asahotak))
+                }
+            }
+          if (caklontong.hasOwnProperty(sender.split('@')[0]) && !isCmd) {
+                kuis = true
+                jawaban = caklontong[sender.split('@')[0]]
+                if (budy.toLowerCase() == jawaban) {
+                	var htgmi = randomNomor(100)
+                    atm.addKoinUser(sender, htgmi, _uang)
+                    await reply(`*_🎮 Caklontong  🎮_*\n\n** *Jawaban Benar🎉*\n** *Mendapatkan* : _Rp ${htgmi} 💰_\n\nIngin bermain lagi? kirim *${prefix}caklontong*`)
+                    delete caklontong[sender.split('@')[0]]
+                    fs.writeFileSync("./database/caklontong.json", JSON.stringify(caklontong))
+                }
+            }
+          if (tebakjenaka.hasOwnProperty(sender.split('@')[0]) && !isCmd) {
+                kuis = true
+                jawaban = tebakjenaka[sender.split('@')[0]]
+                if (budy.toLowerCase() == jawaban) {
+                	var htgmuu = randomNomor(100)
+                    atm.addKoinUser(sender, htgmuu, _uang)
+                    await reply(`*_🎮 Tebak Jenaka  🎮_*\n\n** *Jawaban Benar🎉*\n** *Mendapatkan* : _Rp ${htgmuu} 💰_\n\nIngin bermain lagi? kirim *${prefix}tebakjenaka*`)
+                    delete tebakjenaka[sender.split('@')[0]]
+                    fs.writeFileSync("./database/tebakjenaka.json", JSON.stringify(tebakjenaka))
+                }
+            }
+            if (tebaklirik.hasOwnProperty(sender.split('@')[0]) && !isCmd) {
+                kuis = true
+                jawaban = tebaklirik[sender.split('@')[0]]
+                if (budy.toLowerCase() == jawaban) {
+                	var htgmii = randomNomor(100)
+                    atm.addKoinUser(sender, htgmii, _uang)
+                    await reply(`*_🎮 Tebak Lirik 🎮_*\n\n** *Jawaban Benar🎉*\n** *Mendapatkan* : _Rp ${htgmii} 💰_\n\nIngin bermain lagi? kirim *${prefix}tebaklirik*`)
+                    delete tebaklirik[sender.split('@')[0]]
+                    fs.writeFileSync("./database/tebaklirik.json", JSON.stringify(tebaklirik))
+                }
+            }
+            if (tebakimia.hasOwnProperty(sender.split('@')[0]) && !isCmd) {
+                kuis = true
+                jawaban = tebakimia[sender.split('@')[0]]
+                if (budy.toLowerCase() == jawaban) {
+                	var htgmcc = randomNomor(100)
+                    atm.addKoinUser(sender, htgmcc, _uang)
+                    await reply(`*_🎮 Tebak Kimia 🎮_*\n\n** *Jawaban Benar🎉*\n** *Mendapatkan* : _Rp ${htgmcc} 💰_\n\nIngin bermain lagi? kirim *${prefix}tebakkimia*`)
+                    delete tebakimia[sender.split('@')[0]]
+                    fs.writeFileSync("./database/tebakimia.json", JSON.stringify(tebakimia))
+                }
+            }
+          if (tebaksiapaaku.hasOwnProperty(sender.split('@')[0]) && !isCmd) {
+                kuis = true
+                jawaban = tebaksiapaaku[sender.split('@')[0]]
+                if (budy.toLowerCase() == jawaban) {
+                	var htgmk = randomNomor(100)
+                    atm.addKoinUser(sender, htgmk, _uang)
+                    await reply(`*_🎮 Tebak Siapakah Aku  🎮_*\n\n** *Jawaban Benar🎉*\n** *Mendapatkan* : _Rp ${htgmk} 💰_\n\nIngin bermain lagi? kirim *${prefix}tebaksiapaaku*`)
+                    delete tebaksiapaaku[sender.split('@')[0]]
+                    fs.writeFileSync("./database/tebaksiapaaku.json", JSON.stringify(tebaksiapaaku))
+                }
+            }
+          if (tebakbendera.hasOwnProperty(sender.split('@')[0]) && !isCmd) {
+                kuis = true
+                jawaban = tebakbendera[sender.split('@')[0]]
+                if (budy.toLowerCase() == jawaban) {
+                	var html = randomNomor(100)
+                    atm.addKoinUser(sender, html, _uang)
+                    await reply(`*_🎮 Tebak Bendera  🎮_*\n\n** *Jawaban Benar🎉*\n** *Mendapatkan* : _Rp ${html} 💰_\n\nIngin bermain lagi? kirim *${prefix}tebakbendera*`)
+                    delete tebakbendera[sender.split('@')[0]]
+                    fs.writeFileSync("./database/tebakbendera.json", JSON.stringify(tebakbendera))
+                }
+            }
+          if (susunkata.hasOwnProperty(sender.split('@')[0]) && !isCmd) {
+                kuis = true
+                jawaban = susunkata[sender.split('@')[0]]
+                if (budy.toLowerCase() == jawaban) {
+                	var htmp = randomNomor(100)
+                    atm.addKoinUser(sender, htmp, _uang)
+                    await reply(`*_🎮 Susun Kata  🎮_*\n\n** *Jawaban Benar🎉*\n** *Mendapatkan* : _Rp ${htmp} 💰_\n\nIngin bermain lagi? kirim *${prefix}susunkata*`)
+                    delete susunkata[sender.split('@')[0]]
+                    fs.writeFileSync("./database/susunkata.json", JSON.stringify(susunkata))
+                }
+            }
+          if (tebakata.hasOwnProperty(sender.split('@')[0]) && !isCmd) {
+                kuis = true
+                jawaban = tebakata[sender.split('@')[0]]
+                if (budy.toLowerCase() == jawaban) {
+                	var htmu = randomNomor(100)
+                    atm.addKoinUser(sender, htmu, _uang)
+                    await reply(`*_🎮 Tebak Kata  🎮_*\n\n** *Jawaban Benar🎉*\n** *Mendapatkan* : _Rp ${htmu} 💰_\n\nIngin bermain lagi? kirim *${prefix}tebakkata*`)
+                    delete tebakata[sender.split('@')[0]]
+                    fs.writeFileSync("./database/tebakata.json", JSON.stringify(tebakata))
+                }
+            }
 		const sendStickerUrl = async(to, url) => {
 			console.log(color(time, 'magenta'), color(moment.tz('Asia/Jakarta').format('HH:mm:ss'), "gold"), color('Downloading sticker'))
 				var names = getRandom('.webp')
@@ -1177,32 +1344,6 @@ reply('http://instagram.com/mhmdfjralfarizi_')
         switch (command) {
         	case 'menu':
         case 'help':
-        stod = `${sender}`
-       stst = await denz.getStatus(`${sender.split('@')[0]}@c.us`)
-				stst = stst.status == 401 ? '' : stst.status
-			num = await fetchJson(`https://numlookupapi.com/api/validate/${senderNumber}`, {method: 'get'})
-       menu = `❏「 \`\`\`${NamaBot}\`\`\` 」
-╾ _Creator : @${dtod.split('@')[0]}_
-╾ _Battery : ${baterai.battery}_
-╾ _Mode : ${publik ? 'Public' : 'Self'}_
-╾ _Total Hit : ${cmhit.length}_
-╾ _Command : ${prefix + command}_
-❏「 \`\`\`INFO BOT\`\`\` 」
-╾ _Nama Bot : ${NamaBot}_
-╾ _Nama Owner : ${NamaOwner}_
-╾ _Nomor Owner : @${otod.split('@')[0]}_
-╾ _Auto Composing : ${autocomposing}_
-╾ _Auto Recording : ${autorecording}_
-❏「 \`\`\`INFO USER\`\`\` 」
-╾ _Status : ${isOwner ? 'Owner' : 'User'}_
-╾ _Nama : ${pushname}_
-╾ _Bio : ${stst}_
-╾ _Nomor : @${stod.split('@')[0]}_
-╾ _Info Nomor : ${num.line_type} - ${num.country_name} - ${num.carrier}_`
-sendButDocument(from, `${menu}`, "*_© 𝐹 𝑎 𝑗 𝑎 𝑟 𝐴 𝑙 𝑓 𝑎 𝑟 𝑖 𝑧 𝑖 右_*", fs.readFileSync('./sampah/mhmdfjralfarizi_'), {mimetype:Mimetype.pdf, thumbnail:fs.readFileSync('./media/image/banner.jpg'), filename:`${jmn} - ${week} - ${calender}`}, [{buttonId:`command`,buttonText:{displayText:'LIST MENU'},type:1},{buttonId:`owner`,buttonText:{displayText:'DEVELOPER'},type:1},{buttonId:`script`,buttonText:{displayText:'SOURCE CODE'},type:1}], {quoted:fmen, contextInfo: { mentionedJid: [dtod,otod,stod], forwardingScore: 508, isForwarded: true, externalAdReply:{title:`${tampilUcapan} ${pushname}`,body:`*click here to play music`,mediaType:"2",thumbnail:ofrply,mediaUrl:`https://youtu.be/uQiF1yOnzDg`}}})
-break
-        	case 'menu2':
-        case 'help2':
         if(menusimpel == false){
            stod = `${sender}`
 fill =`Hai Kak ${pushname}, ${tampilUcapan}
@@ -2939,24 +3080,44 @@ address: impostor,
 jpegThumbnail: ofrply}, MessageType.liveLocation, {quoted:floc})
 break
 case 'tts':
-					if (args.length < 1) return denz.sendMessage(from, `Kode bahasanya mana kak? contoh : ${prefix}tts id yamate kudasai`, text, { quoted: mek })
-				   const gtts = require('./lib/gtts')(args[0])
-					if (args.length < 2) return denz.sendMessage(from, `Teksnya mana kak? contoh : ${prefix}tts id yamate kudasai`, text, { quoted: mek })
-					var bby = body.slice(8)
-					ranm = getRandom('.mp3')
-					rano = getRandom('.ogg')
-					bby.length > 300
-						? reply('Teks nya terlalu panjang kak')
-						: gtts.save(ranm, bby, function () {
-							exec(`ffmpeg -i ${ranm} -ar 48000 -vn -c:a libopus ${rano}`, (err) => {
-								fs.unlinkSync(ranm)
-								buff = fs.readFileSync(rano)
-								if (err) return reply(dla.stikga())
-								denz.sendMessage(from, buff, audio, { duration: 359996400, ptt: true, quoted: mek })
-								fs.unlinkSync(rano)
-							})
-						})
-					break
+            
+					  try{
+        if (args.length > 1) {
+        const gtts = require('./lib/gtts')(args[0])
+        if (args.length < 2) return denz.sendMessage(from, 'Textnya mana gan?', text, {quoted: mek})
+        ngab = budy.slice(7)
+        ranm = getRandom('.mp3')
+        rano = getRandom('.ogg')
+        ngab.length > 600
+        ? reply('Textnya kebanyakan gan')
+        : gtts.save(ranm, ngab, function() {
+            exec(`ffmpeg -i ${ranm} -ar 48000 -vn -c:a libopus ${rano}`, (err) => {
+                fs.unlinkSync(ranm)
+                buff = fs.readFileSync(rano)
+                if (err) return reply('Gagal gan:(')
+                denz.sendMessage(from, buff, audio, {quoted:mek,ptt:true})
+                fs.unlinkSync(rano)
+            })
+        })
+	} else if ( args.length === 1 ){
+		ngab = mek.message.extendedTextMessage.contextInfo.quotedMessage.conversation
+		const gtts = require('./lib/gtts')(args[0])
+        ranm = getRandom('.mp3')
+        rano = getRandom('.ogg')
+        gtts.save(ranm, ngab, function() {
+            exec(`ffmpeg -i ${ranm} -ar 48000 -vn -c:a libopus ${rano}`, (err) => {
+                fs.unlinkSync(ranm)
+                buff = fs.readFileSync(rano)
+                if (err) return reply(mess.error.api)
+                denz.sendMessage(from, buff, audio, {quoted:mek,ptt:true})
+                fs.unlinkSync(rano)
+            })
+        })
+	}
+} catch (e){
+	reply(mess.error.api)
+}
+break 
 				case 'demote':
 				if (!isGroup) return reply(mess.only.group)
 				if (!isGroupAdmins) return reply(mess.only.admin)
@@ -6869,6 +7030,554 @@ if (!isNsfw) return reply(`Fitur Nsfw Belum Aktif Di Grup Ini\nKetik: ${prefix}n
 				dapuhy = await getBuffer(`https://api.lolhuman.xyz/api/random/nsfw/hentai?apikey=${lol}`)
 				denz.sendMessage(from, dapuhy, image, {quoted: ftrol, thumbnail: fs.readFileSync('./denz.jpg')})
 				break
+				//🐀💰 MALING
+                   case 'trigger':
+					var imgbb = require('imgbb-uploader')
+					if ((isMedia && !mek.message.videoMessage || isQuotedImage) && args.length == 0) {
+					ger = isQuotedImage ? JSON.parse(JSON.stringify(mek).replace('quotedM','m')).message.extendedTextMessage.contextInfo : mek 
+					sticWait(from)
+					console.log(color(time, 'magenta'), color('Downloading sticker...'))
+					owgi = await  denz.downloadAndSaveMediaMessage(ger)
+					anu = await imgbb("0ffc503f79f9b051b82e643eb3e3a746", owgi)
+					teks = `${anu.display_url}`
+					ranp = getRandom('.gif')
+					rano = getRandom('.webp')
+					anu1 = `https://some-random-api.ml/canvas/triggered?avatar=${teks}`
+					exec(`wget ${anu1} -O ${ranp} && ffmpeg -i ${ranp} -vcodec libwebp -filter:v fps=fps=20 -lossless 1 -loop 0 -preset default -an -vsync 0 -s 512:512 ${rano}`, (err) => {
+					fs.unlinkSync(ranp)
+					if (err) return reply(mess.error.stick)
+					denz.sendMessage(from, fs.readFileSync(rano), sticker, {quoted: mek})
+					fs.unlinkSync(rano)
+					})
+					} else {
+					reply('Gunakan foto!')
+					}
+					break
+					case 'sampah':
+					var imgbb = require('imgbb-uploader')
+	                 if ((isMedia && !mek.message.videoMessage || isQuotedImage) && args.length == 0) {
+	                 ger = isQuotedImage ? JSON.parse(JSON.stringify(mek).replace('quotedM','m')).message.extendedTextMessage.contextInfo : mek
+	                 owgi = await denz.downloadAndSaveMediaMessage(ger)
+	                 let aanu = await imgbb("55e7971b786836b9966eca4528210ba8", owgi)
+	                let teks = `${aanu.display_url}`
+                    titid = await fetchJson(`https://nekobot.xyz/api/imagegen?type=trash&url=${teks}`, {method: 'get'})
+                    buffer = await getBuffer(titid.message)
+					denz.sendMessage(from, buffer, image, {quoted: mek})
+                   }
+              break       
+		case 'gay':
+					var imgbb = require('imgbb-uploader')
+					if ((isMedia && !mek.message.videoMessage || isQuotedImage) && args.length == 0) {
+					ger = isQuotedImage ? JSON.parse(JSON.stringify(mek).replace('quotedM','m')).message.extendedTextMessage.contextInfo : mek 
+					sticWait(from)
+					console.log(color(time, 'magenta'), color('Downloading sticker...'))
+					owgi = await  denz.downloadAndSaveMediaMessage(ger)
+					anu = await imgbb("0ffc503f79f9b051b82e643eb3e3a746", owgi)
+					teks = `${anu.display_url}`
+					ranp = getRandom('.gif')
+					rano = getRandom('.webp')
+					anu1 = `https://some-random-api.ml/canvas/gay?avatar=${teks}`
+					exec(`wget ${anu1} -O ${ranp} && ffmpeg -i ${ranp} -vcodec libwebp -filter:v fps=fps=20 -lossless 1 -loop 0 -preset default -an -vsync 0 -s 512:512 ${rano}`, (err) => {
+					fs.unlinkSync(ranp)
+					if (err) return reply(mess.error.stick)
+					denz.sendMessage(from, fs.readFileSync(rano), sticker, {quoted: mek})
+					console.log(color(time, 'magenta'), color('Succes send sticker...'))
+					fs.unlinkSync(rano)
+					})
+					} else {
+					reply('Gunakan foto!')
+					}
+					break
+		case 'glass':
+					var imgbb = require('imgbb-uploader')
+					if ((isMedia && !mek.message.videoMessage || isQuotedImage) && args.length == 0) {
+					ger = isQuotedImage ? JSON.parse(JSON.stringify(mek).replace('quotedM','m')).message.extendedTextMessage.contextInfo : mek 
+					sticWait(from)
+					console.log(color(time, 'magenta'), color('Downloading sticker...'))
+					owgi = await  denz.downloadAndSaveMediaMessage(ger)
+					anu = await imgbb("0ffc503f79f9b051b82e643eb3e3a746", owgi)
+					teks = `${anu.display_url}`
+					ranp = getRandom('.gif')
+					rano = getRandom('.webp')
+					anu1 = `https://some-random-api.ml/canvas/glass?avatar=${teks}`
+					exec(`wget ${anu1} -O ${ranp} && ffmpeg -i ${ranp} -vcodec libwebp -filter:v fps=fps=20 -lossless 1 -loop 0 -preset default -an -vsync 0 -s 512:512 ${rano}`, (err) => {
+					fs.unlinkSync(ranp)
+					if (err) return reply(mess.error.stick)
+					denz.sendMessage(from, fs.readFileSync(rano), sticker, {quoted: mek})
+					console.log(color(time, 'magenta'), color('Succes send sticker...'))
+					fs.unlinkSync(rano)
+					})
+					} else {
+					reply('Gunakan foto!')
+					}
+					break
+		case 'passed':
+					var imgbb = require('imgbb-uploader')
+					if ((isMedia && !mek.message.videoMessage || isQuotedImage) && args.length == 0) {
+					ger = isQuotedImage ? JSON.parse(JSON.stringify(mek).replace('quotedM','m')).message.extendedTextMessage.contextInfo : mek 
+					sticWait(from)
+					console.log(color(time, 'magenta'), color('Downloading sticker...'))
+					owgi = await  denz.downloadAndSaveMediaMessage(ger)
+					anu = await imgbb("0ffc503f79f9b051b82e643eb3e3a746", owgi)
+					teks = `${anu.display_url}`
+					ranp = getRandom('.gif')
+					rano = getRandom('.webp')
+					anu1 = `https://some-random-api.ml/canvas/passed?avatar=${teks}`
+					exec(`wget ${anu1} -O ${ranp} && ffmpeg -i ${ranp} -vcodec libwebp -filter:v fps=fps=20 -lossless 1 -loop 0 -preset default -an -vsync 0 -s 512:512 ${rano}`, (err) => {
+					fs.unlinkSync(ranp)
+					if (err) return reply(mess.error.stick)
+					denz.sendMessage(from, fs.readFileSync(rano), sticker, {quoted: mek})
+					console.log(color(time, 'magenta'), color('Succes send sticker...'))
+					fs.unlinkSync(rano)
+					})
+					} else {
+					reply('Gunakan foto!')
+					}
+					break
+		case 'jail':
+					var imgbb = require('imgbb-uploader')
+					if ((isMedia && !mek.message.videoMessage || isQuotedImage) && args.length == 0) {
+					ger = isQuotedImage ? JSON.parse(JSON.stringify(mek).replace('quotedM','m')).message.extendedTextMessage.contextInfo : mek 
+					sticWait(from)
+					console.log(color(time, 'magenta'), color('Downloading sticker...'))
+					owgi = await  denz.downloadAndSaveMediaMessage(ger)
+					anu = await imgbb("0ffc503f79f9b051b82e643eb3e3a746", owgi)
+					teks = `${anu.display_url}`
+					ranp = getRandom('.gif')
+					rano = getRandom('.webp')
+					anu1 = `https://some-random-api.ml/canvas/jail?avatar=${teks}`
+					exec(`wget ${anu1} -O ${ranp} && ffmpeg -i ${ranp} -vcodec libwebp -filter:v fps=fps=20 -lossless 1 -loop 0 -preset default -an -vsync 0 -s 512:512 ${rano}`, (err) => {
+					fs.unlinkSync(ranp)
+					if (err) return reply(mess.error.stick)
+					denz.sendMessage(from, fs.readFileSync(rano), sticker, {quoted: mek})
+					console.log(color(time, 'magenta'), color('Succes send sticker...'))
+					fs.unlinkSync(rano)
+					})
+					} else {
+					reply('Gunakan foto!')
+					}
+					break
+		case 'comrade':
+					var imgbb = require('imgbb-uploader')
+					if ((isMedia && !mek.message.videoMessage || isQuotedImage) && args.length == 0) {
+					ger = isQuotedImage ? JSON.parse(JSON.stringify(mek).replace('quotedM','m')).message.extendedTextMessage.contextInfo : mek 
+					sticWait(from)
+					console.log(color(time, 'magenta'), color('Downloading sticker...'))
+					owgi = await  denz.downloadAndSaveMediaMessage(ger)
+					anu = await imgbb("0ffc503f79f9b051b82e643eb3e3a746", owgi)
+					teks = `${anu.display_url}`
+					ranp = getRandom('.gif')
+					rano = getRandom('.webp')
+					anu1 = `https://some-random-api.ml/canvas/comrade?avatar=${teks}`
+					exec(`wget ${anu1} -O ${ranp} && ffmpeg -i ${ranp} -vcodec libwebp -filter:v fps=fps=20 -lossless 1 -loop 0 -preset default -an -vsync 0 -s 512:512 ${rano}`, (err) => {
+					fs.unlinkSync(ranp)
+					if (err) return reply(mess.error.stick)
+					denz.sendMessage(from, fs.readFileSync(rano), sticker, {quoted: mek})
+					console.log(color(time, 'magenta'), color('Succes send sticker...'))
+					fs.unlinkSync(rano)
+					})
+					} else {
+					reply('Gunakan foto!')
+					}
+					break
+		case 'hijau':
+					var imgbb = require('imgbb-uploader')
+					if ((isMedia && !mek.message.videoMessage || isQuotedImage) && args.length == 0) {
+					ger = isQuotedImage ? JSON.parse(JSON.stringify(mek).replace('quotedM','m')).message.extendedTextMessage.contextInfo : mek 
+					sticWait(from)
+					console.log(color(time, 'magenta'), color('Downloading sticker...'))
+					owgi = await  denz.downloadAndSaveMediaMessage(ger)
+					anu = await imgbb("0ffc503f79f9b051b82e643eb3e3a746", owgi)
+					teks = `${anu.display_url}`
+					ranp = getRandom('.gif')
+					rano = getRandom('.webp')
+					anu6 = `https://some-random-api.ml/canvas/green?avatar=${teks}`
+					exec(`wget ${anu6} -O ${ranp} && ffmpeg -i ${ranp} -vcodec libwebp -filter:v fps=fps=20 -lossless 1 -loop 0 -preset default -an -vsync 0 -s 512:512 ${rano}`, (err) => {
+					fs.unlinkSync(ranp)
+					if (err) return reply(mess.error.stick)
+					denz.sendMessage(from, fs.readFileSync(rano), sticker, {quoted: mek})
+					console.log(color(time, 'magenta'), color('Succes send sticker...'))
+					fs.unlinkSync(rano)
+					
+					})
+					} else {
+					reply('Gunakan foto!')
+					}
+					break 
+		case 'biru':
+					var imgbb = require('imgbb-uploader')
+					if ((isMedia && !mek.message.videoMessage || isQuotedImage) && args.length == 0) {
+					ger = isQuotedImage ? JSON.parse(JSON.stringify(mek).replace('quotedM','m')).message.extendedTextMessage.contextInfo : mek 
+					sticWait(from)
+					console.log(color(time, 'magenta'), color('Downloading sticker...'))
+					owgi = await  denz.downloadAndSaveMediaMessage(ger)
+					anu = await imgbb("0ffc503f79f9b051b82e643eb3e3a746", owgi)
+					teks = `${anu.display_url}`
+					ranp = getRandom('.gif')
+					rano = getRandom('.webp')
+					anu7 = `https://some-random-api.ml/canvas/blue?avatar=${teks}`
+					exec(`wget ${anu7} -O ${ranp} && ffmpeg -i ${ranp} -vcodec libwebp -filter:v fps=fps=20 -lossless 1 -loop 0 -preset default -an -vsync 0 -s 512:512 ${rano}`, (err) => {
+					fs.unlinkSync(ranp)
+					if (err) return reply(mess.error.stick)
+					denz.sendMessage(from, fs.readFileSync(rano), sticker, {quoted: mek})
+					console.log(color(time, 'magenta'), color('Succes send sticker...'))
+					fs.unlinkSync(rano)
+					})
+					
+					} else {
+					reply('Gunakan foto!')
+					}
+					 break 
+		case 'greyscale':
+					var imgbb = require('imgbb-uploader')
+					if ((isMedia && !mek.message.videoMessage || isQuotedImage) && args.length == 0) {
+					ger = isQuotedImage ? JSON.parse(JSON.stringify(mek).replace('quotedM','m')).message.extendedTextMessage.contextInfo : mek 
+					sticWait(from)
+					console.log(color(time, 'magenta'), color('Downloading sticker...'))
+					owgi = await  denz.downloadAndSaveMediaMessage(ger)
+					anu = await imgbb("0ffc503f79f9b051b82e643eb3e3a746", owgi)
+					teks = `${anu.display_url}`
+					ranp = getRandom('.gif')
+					rano = getRandom('.webp')
+					anu8 = `https://some-random-api.ml/canvas/greyscale?avatar=${teks}`
+					exec(`wget ${anu8} -O ${ranp} && ffmpeg -i ${ranp} -vcodec libwebp -filter:v fps=fps=20 -lossless 1 -loop 0 -preset default -an -vsync 0 -s 512:512 ${rano}`, (err) => {
+					fs.unlinkSync(ranp)
+					if (err) return reply(mess.error.stick)
+					denz.sendMessage(from, fs.readFileSync(rano), sticker, {quoted: mek})
+					console.log(color(time, 'magenta'), color('Succes send sticker...'))
+					fs.unlinkSync(rano)
+					})
+					
+					} else {
+					reply('Gunakan foto!')
+					}
+				 break 
+		case 'invert':
+					var imgbb = require('imgbb-uploader')
+					if ((isMedia && !mek.message.videoMessage || isQuotedImage) && args.length == 0) {
+					ger = isQuotedImage ? JSON.parse(JSON.stringify(mek).replace('quotedM','m')).message.extendedTextMessage.contextInfo : mek 
+					sticWait(from)
+					console.log(color(time, 'magenta'), color('Downloading sticker...'))
+					owgi = await  denz.downloadAndSaveMediaMessage(ger)
+					anu = await imgbb("0ffc503f79f9b051b82e643eb3e3a746", owgi)
+					teks = `${anu.display_url}`
+					ranp = getRandom('.gif')
+					rano = getRandom('.webp')
+					anu8 = `https://some-random-api.ml/canvas/invert?avatar=${teks}`
+					exec(`wget ${anu8} -O ${ranp} && ffmpeg -i ${ranp} -vcodec libwebp -filter:v fps=fps=20 -lossless 1 -loop 0 -preset default -an -vsync 0 -s 512:512 ${rano}`, (err) => {
+					fs.unlinkSync(ranp)
+					if (err) return reply(mess.error.stick)
+					denz.sendMessage(from, fs.readFileSync(rano), sticker, {quoted: mek})
+					console.log(color(time, 'magenta'), color('Succes send sticker...'))
+					fs.unlinkSync(rano)
+					})
+					
+					} else {
+					reply('Gunakan foto!')
+					}
+				 break 
+		case 'invert_greyscale':
+					var imgbb = require('imgbb-uploader')
+					if ((isMedia && !mek.message.videoMessage || isQuotedImage) && args.length == 0) {
+					ger = isQuotedImage ? JSON.parse(JSON.stringify(mek).replace('quotedM','m')).message.extendedTextMessage.contextInfo : mek 
+					sticWait(from)
+					console.log(color(time, 'magenta'), color('Downloading sticker...'))
+					owgi = await  denz.downloadAndSaveMediaMessage(ger)
+					anu = await imgbb("0ffc503f79f9b051b82e643eb3e3a746", owgi)
+					teks = `${anu.display_url}`
+					ranp = getRandom('.gif')
+					rano = getRandom('.webp')
+					anu8 = `https://some-random-api.ml/canvas/invertgreyscale?avatar=${teks}`
+					exec(`wget ${anu8} -O ${ranp} && ffmpeg -i ${ranp} -vcodec libwebp -filter:v fps=fps=20 -lossless 1 -loop 0 -preset default -an -vsync 0 -s 512:512 ${rano}`, (err) => {
+					fs.unlinkSync(ranp)
+					if (err) return reply(mess.error.stick)
+					denz.sendMessage(from, fs.readFileSync(rano), sticker, {quoted: mek})
+					console.log(color(time, 'magenta'), color('Succes send sticker...'))
+					fs.unlinkSync(rano)
+					})
+					
+					} else {
+					reply('Gunakan foto!')
+					}
+				 break 
+		case 'red':
+					var imgbb = require('imgbb-uploader')
+					if ((isMedia && !mek.message.videoMessage || isQuotedImage) && args.length == 0) {
+					ger = isQuotedImage ? JSON.parse(JSON.stringify(mek).replace('quotedM','m')).message.extendedTextMessage.contextInfo : mek 
+					sticWait(from)
+					console.log(color(time, 'magenta'), color('Downloading sticker...'))
+					owgi = await  denz.downloadAndSaveMediaMessage(ger)
+					anu = await imgbb("0ffc503f79f9b051b82e643eb3e3a746", owgi)
+					teks = `${anu.display_url}`
+					ranp = getRandom('.gif')
+					rano = getRandom('.webp')
+					anu8 = `https://some-random-api.ml/canvas/red?avatar=${teks}`
+					exec(`wget ${anu8} -O ${ranp} && ffmpeg -i ${ranp} -vcodec libwebp -filter:v fps=fps=20 -lossless 1 -loop 0 -preset default -an -vsync 0 -s 512:512 ${rano}`, (err) => {
+					fs.unlinkSync(ranp)
+					if (err) return reply(mess.error.stick)
+					denz.sendMessage(from, fs.readFileSync(rano), sticker, {quoted: mek})
+					console.log(color(time, 'magenta'), color('Succes send sticker...'))
+					fs.unlinkSync(rano)
+					})
+					
+					} else {
+					reply('Gunakan foto!')
+					}
+				 break
+         case 'blurple':
+					var imgbb = require('imgbb-uploader')
+					if ((isMedia && !mek.message.videoMessage || isQuotedImage) && args.length == 0) {
+					ger = isQuotedImage ? JSON.parse(JSON.stringify(mek).replace('quotedM','m')).message.extendedTextMessage.contextInfo : mek 
+					sticWait(from)
+					console.log(color(time, 'magenta'), color('Downloading sticker...'))
+					owgi = await  denz.downloadAndSaveMediaMessage(ger)
+					anu = await imgbb("0ffc503f79f9b051b82e643eb3e3a746", owgi)
+					teks = `${anu.display_url}`
+					ranp = getRandom('.gif')
+					rano = getRandom('.webp')
+					anu8 = `https://some-random-api.ml/canvas/blurple?avatar=${teks}`
+					exec(`wget ${anu8} -O ${ranp} && ffmpeg -i ${ranp} -vcodec libwebp -filter:v fps=fps=20 -lossless 1 -loop 0 -preset default -an -vsync 0 -s 512:512 ${rano}`, (err) => {
+					fs.unlinkSync(ranp)
+					if (err) return reply(mess.error.stick)
+					denz.sendMessage(from, fs.readFileSync(rano), sticker, {quoted: mek})
+					console.log(color(time, 'magenta'), color('Succes send sticker...'))
+					fs.unlinkSync(rano)
+					})
+					
+					} else {
+					reply('Gunakan foto!')
+					}
+				 break 
+		case 'blurple2':
+					var imgbb = require('imgbb-uploader')
+					if ((isMedia && !mek.message.videoMessage || isQuotedImage) && args.length == 0) {
+					ger = isQuotedImage ? JSON.parse(JSON.stringify(mek).replace('quotedM','m')).message.extendedTextMessage.contextInfo : mek 
+					sticWait(from)
+					console.log(color(time, 'magenta'), color('Downloading sticker...'))
+					owgi = await  denz.downloadAndSaveMediaMessage(ger)
+					anu = await imgbb("0ffc503f79f9b051b82e643eb3e3a746", owgi)
+					teks = `${anu.display_url}`
+					ranp = getRandom('.gif')
+					rano = getRandom('.webp')
+					anu8 = `https://some-random-api.ml/canvas/blurple2?avatar=${teks}`
+					exec(`wget ${anu8} -O ${ranp} && ffmpeg -i ${ranp} -vcodec libwebp -filter:v fps=fps=20 -lossless 1 -loop 0 -preset default -an -vsync 0 -s 512:512 ${rano}`, (err) => {
+					fs.unlinkSync(ranp)
+					if (err) return reply(mess.error.stick)
+					denz.sendMessage(from, fs.readFileSync(rano), sticker, {quoted: mek})
+					console.log(color(time, 'magenta'), color('Succes send sticker...'))
+					fs.unlinkSync(rano)
+					})
+					
+					} else {
+					reply('Gunakan foto!')
+					}
+				 break 
+		case 'wasted':
+					var imgbb = require('imgbb-uploader')
+					if ((isMedia && !mek.message.videoMessage || isQuotedImage) && args.length == 0) {
+					ger = isQuotedImage ? JSON.parse(JSON.stringify(mek).replace('quotedM','m')).message.extendedTextMessage.contextInfo : mek 
+					sticWait(from)
+					owgi = await  denz.downloadAndSaveMediaMessage(ger)
+					anu = await imgbb("0ffc503f79f9b051b82e643eb3e3a746", owgi)
+					teks = `${anu.display_url}`
+					ranp = getRandom('.gif')
+					rano = getRandom('.webp')
+					anu2 = `https://some-random-api.ml/canvas/wasted?avatar=${teks}`
+					exec(`wget ${anu2} -O ${ranp} && ffmpeg -i ${ranp} -vcodec libwebp -filter:v fps=fps=20 -lossless 1 -loop 0 -preset default -an -vsync 0 -s 512:512 ${rano}`, (err) => {
+					fs.unlinkSync(ranp)
+					if (err) return reply(mess.error.stick)
+					denz.sendMessage(from, fs.readFileSync(rano), sticker, {quoted: mek})
+					fs.unlinkSync(rano)
+					})
+					
+					} else {
+					reply('Gunakan foto!')
+					}
+					break 
+		case 'pelangi':
+		case 'rainbow':
+					var imgbb = require('imgbb-uploader')
+					if ((isMedia && !mek.message.videoMessage || isQuotedImage) && args.length == 0) {
+					ger = isQuotedImage ? JSON.parse(JSON.stringify(mek).replace('quotedM','m')).message.extendedTextMessage.contextInfo : mek 
+					sticWait(from)
+					owgi = await  denz.downloadAndSaveMediaMessage(ger)
+					anu = await imgbb("0ffc503f79f9b051b82e643eb3e3a746", owgi)
+					teks = `${anu.display_url}`
+					ranp = getRandom('.gif')
+					rano = getRandom('.webp')
+					anu3 = `https://some-random-api.ml/canvas/gay?avatar=${teks}`
+					exec(`wget ${anu3} -O ${ranp} && ffmpeg -i ${ranp} -vcodec libwebp -filter:v fps=fps=20 -lossless 1 -loop 0 -preset default -an -vsync 0 -s 512:512 ${rano}`, (err) => {
+					fs.unlinkSync(ranp)
+					if (err) return reply(mess.error.stick)
+					denz.sendMessage(from, fs.readFileSync(rano), sticker, {quoted: mek})
+					fs.unlinkSync(rano)
+					})
+					
+					} else {
+					reply('Gunakan foto!')
+					}
+					break 
+		case 'sepia':
+					var imgbb = require('imgbb-uploader')
+					if ((isMedia && !mek.message.videoMessage || isQuotedImage) && args.length == 0) {
+					ger = isQuotedImage ? JSON.parse(JSON.stringify(mek).replace('quotedM','m')).message.extendedTextMessage.contextInfo : mek 
+					sticWait(from)
+					owgi = await  denz.downloadAndSaveMediaMessage(ger)
+					anu = await imgbb("0ffc503f79f9b051b82e643eb3e3a746", owgi)
+					teks = `${anu.display_url}`
+					ranp = getRandom('.gif')
+					rano = getRandom('.webp')
+					anu4 = `https://some-random-api.ml/canvas/sepia?avatar=${teks}`
+					exec(`wget ${anu4} -O ${ranp} && ffmpeg -i ${ranp} -vcodec libwebp -filter:v fps=fps=20 -lossless 1 -loop 0 -preset default -an -vsync 0 -s 512:512 ${rano}`, (err) => {
+					fs.unlinkSync(ranp)
+					if (err) return reply(mess.error.stick)
+					denz.sendMessage(from, fs.readFileSync(rano), sticker, {quoted: mek})
+					fs.unlinkSync(rano)
+					})
+					
+					} else {
+					reply('Gunakan foto!')
+					}
+					break 
+					//sound
+case 'sound1':
+      case 'sound2':
+      case 'sound3':
+      case 'sound4':
+      case 'sound5':
+      case 'sound6':
+      case 'sound7':
+      case 'sound8':
+      case 'sound9':
+      case 'sound10':
+      case 'sound11':
+      case 'sound12':
+      case 'sound13':
+      case 'sound14':
+      case 'sound15':
+      case 'sound16':
+      case 'sound17':
+      case 'sound18':
+      case 'sound19':
+      case 'sound20':
+      case 'sound21':
+      case 'sound22':
+      case 'sound23':
+      case 'sound24':
+      case 'sound25':
+      case 'sound26':
+      case 'sound27':
+      case 'sound28':
+      case 'sound29':
+      case 'sound30':
+      case 'sound31':
+      case 'sound32':
+      case 'sound33':
+      case 'sound34':
+      case 'sound35':
+      case 'sound36':
+      case 'sound37':
+      case 'sound38':
+      case 'sound39':
+      case 'sound40':
+      case 'sound41':
+      case 'sound42':
+      case 'sound43':
+      case 'sound44':
+      case 'sound45':
+      case 'sound46':
+      case 'sound47':
+      case 'sound48':
+      case 'sound49':
+      case 'sound50':
+      case 'sound51':
+      case 'sound52':
+      case 'sound53':
+      case 'sound54':
+      case 'sound55':
+      case 'sound56':
+      case 'sound57':
+      case 'sound58':
+      case 'sound59':
+      case 'sound60':
+      case 'sound61':
+      case 'sound62':
+      case 'sound63':
+      case 'sound64':
+      case 'sound65':
+      case 'sound66':
+      case 'sound67':
+      case 'sound68':
+      case 'sound69':
+      case 'sound70':
+      
+      omkeh = await getBuffer(`https://hansxd.nasihosting.com/sound/${command}.mp3`)
+      denz.sendMessage(from, omkeh, MessageType.audio, { quoted: mek, mimetype: 'audio/mp4', ptt: true })
+          break
+          case 'sound71':
+      case 'sound71':
+      case 'sound72':
+      case 'sound73':
+      case 'sound74':
+      case 'sound75':
+      
+      omkeh = await getBuffer(`https://ojankyaa.000webhostapp.com/sound/${command}.mp3`)
+      denz.sendMessage(from, omkeh, MessageType.audio, { quoted: mek, mimetype: 'audio/mp4', ptt: true })
+          break
+          case 'tebakgambar':
+if (tebakgambar.hasOwnProperty(sender.split('@')[0])) return reply("Selesein yg sebelumnya dulu atuh")
+  get_result = await fetchJson(`https://api.lolhuman.xyz/api/tebak/gambar?apikey=denzXd`)
+get_result = get_result.result
+ini_image = get_result.image
+jawaban = get_result.answer
+ini_buffer = await getBuffer(ini_image)
+kisi_kisi = jawaban.replace(/[b|c|d|f|g|h|j|k|l|m|n|p|q|r|s|t|v|w|x|y|z]/gi, '_')
+buff = await getBuffer(ini_image)
+
+denz.sendMessage(from, ini_buffer, image, { quoted: mek, caption: 'Silahkan jawab soal berikut ini\n\nPetunjuk :tebak sendirilah kontol\nWaktu : 30s' }).then(() => {
+  tebakgambar[sender.split('@')[0]] = jawaban.toLowerCase()
+  fs.writeFileSync("./database/tebakgambar.json", JSON.stringify(tebakgambar))
+})
+await sleep(30000)
+if (tebakgambar.hasOwnProperty(sender.split('@')[0])) {
+  console.log(color("Jawaban: " + jawaban))
+  titid = "*Jawaban*: " + jawaban
+  sendButMessage(from, titid, `Klik Untuk Ke Game Selanjutnya`, [
+  {
+ buttonId: `tebakgambar`,
+ buttonText: {
+displayText: `⬡ NEXT `,
+ },
+ type: 1,
+  },]);
+
+  delete tebakgambar[sender.split('@')[0]]
+  fs.writeFileSync("./database/tebakgambar.json", JSON.stringify(tebakgambar))
+}
+gameAdd(sender, glimit)
+break
+       case 'caklontong':
+     
+              if (isGame(sender, gcount, glimit)) return reply(`Limit game kamu sudah habis`)
+              if (caklontong.hasOwnProperty(sender.split('@')[0])) return reply("Masih ada soal yg belum terjawab")
+              get_result = await fetchJson(`https://api.lolhuman.xyz/api/tebak/caklontong?apikey=denzXd`)
+              get_result = get_result.result
+              jawaban = get_result.answer
+              kisi_kisi = jawaban.replace(/[b|c|d|f|g|h|j|k|l|m|n|p|q|r|s|t|v|w|x|y|z]/gi, '_')
+              pertanyaan = get_result.question
+              denz.sendMessage(from, '*+* ```Caklontong```\n\n *soal* :'+pertanyaan+'\n *kisi²* :'+kisi_kisi, text, { quoted: ftrol}).then(() => {
+              caklontong[sender.split('@')[0]] = jawaban.toLowerCase()
+              fs.writeFileSync("./database/caklontong.json", JSON.stringify(caklontong))
+})
+              await sleep(30000)
+              if (caklontong.hasOwnProperty(sender.split('@')[0])) {
+              console.log(color("Jawaban: " + jawaban))
+              reply("Jawaban: " + jawaban)
+              delete caklontong[sender.split('@')[0]]
+              fs.writeFileSync("./database/caklontong.json", JSON.stringify(caklontong))
+}
+              gameAdd(sender, glimit)
+              break
 // END ADD CASE BY FAJAR!!!
 		default:break
 		}
