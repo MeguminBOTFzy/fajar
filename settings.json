@@ -1,4 +1,8 @@
 {
+"autoread": true,
+"autoplaymusic": true,
+"autocomposing": true,
+"autorecording": true,
 "NamaBot": "𝑀𝑒𝑔𝑢𝑚𝑖𝑛 𝐵𝑂𝑇",
 "NomorOwner": "6281333782061",
 "NamaOwner": "𝐹𝑎𝑗𝑎𝑟 𝐴𝑙𝑓𝑎𝑟𝑖𝑧𝑖",
@@ -12,7 +16,7 @@
 "Valkey":"rivalgans",
 "Zeksapi":"FajarxMegumin",
 "Dapapi":"FajarxMegumin",
-"Lolhuman":"YTRAMLANID",
+"Lolhuman":"Mythia-Chan",
 "Xteam":"YTRAMLANID",
 "ZiyKey":"xZiyy",
 "spykey ":"SpyBotApi",
